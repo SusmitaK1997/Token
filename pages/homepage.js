@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
-// import { abi } from '../abi.json';
+const abi=require('../abi.json');
 import Web3 from 'web3';
+
+//  import { ethers } from "ethers";
 
 
 function App() {
- const [tokenAddress,setTokenAddress] = useState(null);
+ const [tokenAddress,setTokenAddress] = useState('');
   const handleSubmit=(e)=>{
     e.preventDefault();
     const token=e.target.tokeninfo.value;
@@ -13,13 +15,14 @@ function App() {
     console.log("Token : " +token,"\n");
   }
   const handleChange=async(e)=>{
-    const web3 = new Web3('https://ds2.spvnetwork.io');
+    //  const provider = new ethers.providers.Web3Provider(window.ethereum);
+     const web3 = new Web3('https://ds2.exx.network/');
     try{
-      // const tokenContract = new web3.eth.Contract(abi, tokenAddress);
-      // const symbol = await tokenContract.methods.symbol().call();
-      // const name = await tokenContract.methods.name().call();
+      const tokenContract = new web3.eth.Contract(abi, tokenAddress);
+      const symbol = await tokenContract.methods.symbol().call();
+      const name = await tokenContract.methods.name().call();
       if(symbol){
-        console.log('valid');
+        console.log('valid',name);
       }
       else
       {

@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "ethers": "^5.7.2",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
-    "web3": "^1.8.0"
+    "web3": "^1.5.3"
   },
   "devDependencies": {
     "eslint": "8.26.0",
