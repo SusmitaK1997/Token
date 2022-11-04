@@ -7,11 +7,15 @@ const abi1=require('../abi1.json');
 import Web3 from 'web3';
 import { useRouter } from 'next/router';
 import { setTimeout } from "timers";
+import { useAppContext } from './context/AppContext';
 
 
 function App() {
-  const router = useRouter(window.ethereum);
+ 
+  const router = useRouter( );
  const [tokenAddress,setTokenAddress] = useState('');
+ const { web3, address,setWeb3,setAddress }= useAppContext();
+  
   const handleSubmit=(e)=>{
     e.preventDefault();
     const token=e.target.tokeninfo.value;
