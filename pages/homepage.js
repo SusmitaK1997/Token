@@ -10,7 +10,7 @@ import { setTimeout } from "timers";
 
 
 function App() {
-  const router = useRouter();
+  const router = useRouter(window.ethereum);
  const [tokenAddress,setTokenAddress] = useState('');
   const handleSubmit=(e)=>{
     e.preventDefault();
