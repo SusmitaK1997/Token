@@ -6,7 +6,7 @@ export const AppContextWrapper=({children})=>{
   
   const [web3, setWeb3] = useState({});
   const [address, setAddress] = useState(null);
-  
+  //const [token,setToken]= useState('');
  
     const connectWallet=async( )=>{
       if
@@ -28,7 +28,9 @@ export const AppContextWrapper=({children})=>{
       setWeb3,
       address,
       setAddress,
-      connectWallet,
+      connectWallet
+      // token,
+      // setToken
       
       
       
