@@ -1,42 +1,44 @@
 import React from "react";
 import Web3 from "web3";
 import { useState } from "react";
-import { useAppContext } from './context/AppContext';
+import { useAppContext } from '../context/AppContext';
 const abi1 = require("../abi1.json");
+const BigNumber = require('bignumber.js');
 
 function App1() {
-  
+  //const web3 = new Web3(window.ethereum);
+  // const web3 = new Web3("https://bsc-dataseed1.binance.org/");
+  const spenderAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
+  const lptoken_ADDRESS = "0x6C64f62123A33827268667BCE5c8472C0a584F87";
   const [amount, setamount] = useState("");
   const [show, setshow] = useState(true);
-  const { connectWallet}= useAppContext();
+  
+  let { connectWallet,address,web3}= useAppContext();
   const handleSubmit = (e) => {
     e.preventDefault();
     const Lock = e.target.lock1.value;
-    const Time = e.target.time1.value;
-    console.log(
-      "Amount to lock : " + Lock,
-      "\n",
-      "Liquidity unlock time : " + Time
-    );
+    //const Time = e.target.time1.value;
+    // console.log(
+    //   "Amount to lock : " + Lock,
+    //   "\n",
+    //   "Liquidity unlock time : " + Time
+    // );
   };
   const check = async (e) => {
-    const web3 = new Web3("https://bsc-dataseed1.binance.org/");
-
+    const web3 = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545/");
+    
     try {
-      const lptoken_ADDRESS = "0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE";
-      const spenderAddr = "0xd1b508360a1286d5A4071a67224Be387d85cb75E";
       const Contract = new web3.eth.Contract(abi1, lptoken_ADDRESS);
-      const owner = "0x763702343200F8f851450EA514DD7488BFd2d408";
-
-      const allow = await Contract.methods.allowance(spenderAddr, owner).call();
-
-      if (allow > e.target.value) {
+      const allow = await Contract.methods.allowance(address,spenderAddr).call();
+      console.log("allowence",Number(allow));
+      if (Number(allow) > Number(e.target.value)){
         console.log("allowence", allow);
         setshow(true);
       } else {
-        // await Contract.methods.approve(spenderAddr, amount).send({ from: owner });
-        console.log("Approave");
+        
+        //Approave();
         setshow(false);
+        
       }
     } catch (err) {
       console.log("error");
@@ -48,16 +50,30 @@ function App1() {
     check(e);
   };
   
+  const Approave =async(e)=>{
+    
+   try{
+      const Contract = new web3.eth.Contract(abi1, lptoken_ADDRESS);
+      // let amount = new BigNumber('99999999999999999999');
+      // console.log(amount);
+      await Contract.methods.approve(spenderAddr, '9999999999').send({ from: address })
+      console.log("Approave");
+      location.reload();
+    }
+   catch(err){
+    console.log(err);
+   }
+  }
+  
   return (
     <div className="app">
-      
       <button  onClick={connectWallet}>
                 Connect Wallet        
       </button>
-      
+      { address ?(
+      <>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          
           <label htmlFor="Lock">Amount to lock</label>
           <input
             type="text"
@@ -66,25 +82,27 @@ function App1() {
             name="lock1"
             onChange={handleAmountChange}
           />
-        </div>
+         </div> 
         <div className="input-group">
           <label htmlFor="time">Liquidity unlock time</label>
           <input type="text" id="Liquidity unlock time" name="time1" />
-        </div>
-        <div>
         </div>
         {show ? (
           <button type="submit" className="submit-btn" onClick={check} >
             Submit
           </button>
         ) : (
-          <button type="approave" className="approave-btn">
+          <button type="approave" className="approave-btn" onClick={Approave}>
             Approave
           </button>
         )}
-        
-      </form>
+        </form>
+          </>
+        ):(
+          <></>
+          )}  
     </div>
+    
   );
 }
 

@@ -7,14 +7,14 @@ const abi1=require('../abi1.json');
 import Web3 from 'web3';
 import { useRouter } from 'next/router';
 import { setTimeout } from "timers";
-import { useAppContext } from './context/AppContext';
+import { useAppContext } from '../context/AppContext';
 
 
 function App() {
  
   const router = useRouter( );
  const [tokenAddress,setTokenAddress] = useState('');
- const { web3, address,setWeb3,setAddress }= useAppContext();
+ let { connectWallet}= useAppContext();
   
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -70,6 +70,9 @@ function App() {
    
     return (
             <div className="Homepage">
+              <button  onClick={connectWallet}>
+                Connect Wallet        
+             </button>
             <h1>
                 Hello Homepage
             </h1>

@@ -6,6 +6,7 @@ export const AppContextWrapper=({children})=>{
   
   const [web3, setWeb3] = useState({});
   const [address, setAddress] = useState(null);
+  
  
     const connectWallet=async( )=>{
       if
@@ -14,7 +15,7 @@ export const AppContextWrapper=({children})=>{
               setAddress(accounts[0])
               let w3 = new Web3(window.ethereum)
               setWeb3(w3)
-             console.log(accounts)
+             console.log('account',accounts)
             }).catch((err) => console.log(err))
           }
           else{
@@ -28,7 +29,8 @@ export const AppContextWrapper=({children})=>{
       address,
       setAddress,
       connectWallet,
-      accounts
+      
+      
       
       
 
